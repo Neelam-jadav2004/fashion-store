@@ -1,40 +1,72 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import ProductCard from "../ProductCard/ProductCard";
 import products from "../data/Products";
-
+// import jeans from "../assets/jeans.jpg";
+// import jeans2 from "../assets/jeans2.jpg";
+// import jeanswomen from "../assets/jeanswomen.jpg";
+// import skirt from "../assets/skirt.jpg";
+// import tshirt from "../assets/tshirt.jpg";
+// import skirt2 from "../assets/skirt2.jpg";
+// import tshirt1 from "../assets/tshirt1.jpg";
+// import tshirt2 from "../assets/tshirt2.jpg";
+// import man1 from "../assets/man1.jpg";
+// import man2 from "../assets/man2.jpg";
+// import kids1 from "../assets/kids1.jpg";
+// import kids2 from "../assets/kids2.jpg";
+// import kids3 from "../assets/kids3.jpg";
+// import kids4 from "../assets/kids4.jpg";
+// import kids5 from "../assets/kids5.jpg";
+// import kids6 from "../assets/kids6.jpg";
+// import kids7 from "../assets/kids7.jpg";
+// import kids8 from "../assets/kids8.jpg";
+// import kids9 from "../assets/kids9.jpg";
+// import kids10 from "../assets/kids10.jpg";
+// import shoes1 from "../assets/shoes1.jpg";
+// import shoes2 from "../assets/shoes2.jpg";
+// import shoes3 from "../assets/shoes3.jpg";
+// import shoes4 from "../assets/shoes4.jpg";
+// import shoes5 from "../assets/shoes5.jpg";
+// import hills1 from "../assets/hills1.jpg";
+// import hills2 from "../assets/hills2.jpg";
+// import hills3 from "../assets/hills3.jpg";
+// import hills4 from "../assets/hills4.jpg";
+// import hills5 from "../assets/hills5.jpg";
 const Products = () => {
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
   const [sortOption, setSortOption] = useState("");
   const [priceRange, setPriceRange] = useState("All");
 
+  const [searchParams] = useSearchParams();
+
+  const selectedCategory =
+    searchParams.get("category") || "All";
+
   // Filter Products
-  // Filter Products
-const filteredProducts = products.filter((product) => {
-  const matchesSearch = product.title
-    .toLowerCase()
-    .includes(search.toLowerCase());
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-  const matchesCategory =
-    category === "All" ||
-    product.category === category;
+    const matchesCategory =
+      selectedCategory === "All" ||
+      product.category === selectedCategory;
 
-  const matchesPrice =
-    priceRange === "All" ||
-    (priceRange === "0-50" &&
-      product.price <= 50) ||
-    (priceRange === "50-100" &&
-      product.price > 50 &&
-      product.price <= 100) ||
-    (priceRange === "100+" &&
-      product.price > 100);
+    const matchesPrice =
+      priceRange === "All" ||
+      (priceRange === "0-50" && product.price <= 50) ||
+      (priceRange === "50-100" &&
+        product.price > 50 &&
+        product.price <= 100) ||
+      (priceRange === "100+" &&
+        product.price > 100);
 
-  return (
-    matchesSearch &&
-    matchesCategory &&
-    matchesPrice
-  );
-});
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesPrice
+    );
+  });
 
   // Sort Products
   const sortedProducts = [...filteredProducts];
@@ -79,43 +111,7 @@ const filteredProducts = products.filter((product) => {
           />
         </div>
 
-        {/* Category Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          <button
-            onClick={() => setCategory("All")}
-            className="bg-black text-white px-5 py-2 rounded-full"
-          >
-            All
-          </button>
-
-          <button
-            onClick={() => setCategory("Jacket")}
-            className="bg-pink-500 text-white px-5 py-2 rounded-full"
-          >
-            Jackets
-          </button>
-
-          <button
-            onClick={() => setCategory("Hoodie")}
-            className="bg-pink-500 text-white px-5 py-2 rounded-full"
-          >
-            Hoodies
-          </button>
-
-          <button
-            onClick={() => setCategory("Casual")}
-            className="bg-pink-500 text-white px-5 py-2 rounded-full"
-          >
-            Casual
-          </button>
-
-          <button
-            onClick={() => setCategory("Fashion")}
-            className="bg-pink-500 text-white px-5 py-2 rounded-full"
-          >
-            Fashion
-          </button>
-        </div>
+      
 
         {/* Sort Dropdown */}
         <div className="flex justify-center mb-12">

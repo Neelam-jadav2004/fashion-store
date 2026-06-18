@@ -78,7 +78,7 @@ const AppRoutes = () => {
 />
 
 <Route
-  path="/track-order"
+  path="/track-order/:id"
   element={<OrderTracking />}
 />
 

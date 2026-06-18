@@ -1,14 +1,35 @@
-const OrderTracking = () => {
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-  const orderStatus = [
-    "Order Placed",
-    "Processing",
+const OrderTracking = () => {
+  const { id } = useParams();
+
+  const [order, setOrder] = useState(null);
+
+  const orderSteps = [
+    "Pending",
+    "Confirmed",
     "Shipped",
-    "Out For Delivery",
     "Delivered",
   ];
 
-  const currentStep = 2; // 0-4
+  useEffect(() => {
+    axios
+      .get(
+        `http://127.0.0.1:8000/api/orders/${id}/`
+      )
+      .then((res) => {
+        setOrder(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  const currentStep = order
+    ? orderSteps.indexOf(order.status)
+    : 0;
 
   return (
     <section className="min-h-screen py-20 bg-gray-100">
@@ -20,21 +41,36 @@ const OrderTracking = () => {
 
         <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
 
-          <p className="text-lg mb-8">
-            Order ID:
-            <span className="font-bold ml-2">
-              #FS2026001
-            </span>
-          </p>
+          {order && (
+            <>
+              <p className="text-lg mb-2">
+                <strong>Order ID:</strong> #{order.id}
+              </p>
 
-          {orderStatus.map((status, index) => (
+              <p className="text-lg mb-2">
+                <strong>Name:</strong> {order.name}
+              </p>
+
+              <p className="text-lg mb-2">
+                <strong>Amount:</strong> ₹{order.amount}
+              </p>
+
+              <p className="text-lg mb-8">
+                <strong>Status:</strong>
+                <span className="text-pink-600 font-bold ml-2">
+                  {order.status}
+                </span>
+              </p>
+            </>
+          )}
+
+          {orderSteps.map((step, index) => (
             <div
               key={index}
               className="flex items-center mb-6"
             >
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-white
-                ${
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${
                   index <= currentStep
                     ? "bg-green-500"
                     : "bg-gray-400"
@@ -44,7 +80,7 @@ const OrderTracking = () => {
               </div>
 
               <span className="ml-4 text-lg">
-                {status}
+                {step}
               </span>
             </div>
           ))}
