@@ -26,7 +26,7 @@ const handleOrder = async (e) => {
   try {
     // Razorpay order create
     const orderResponse = await fetch(
-      "http://127.0.0.1:8000/api/create-razorpay-order/",
+      "https://fashion-store-c5qw.onrender.com/api/create-razorpay-order/",
       {
         method: "POST",
         headers: {
@@ -55,7 +55,7 @@ const handleOrder = async (e) => {
         // Payment successful
 
         await fetch(
-          "http://127.0.0.1:8000/api/create-order/",
+        "https://fashion-store-c5qw.onrender.com/api/create-order/",
           {
             method: "POST",
             headers: {

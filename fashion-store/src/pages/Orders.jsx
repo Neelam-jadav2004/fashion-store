@@ -4,7 +4,7 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/orders/")
+    fetch("https://fashion-store-c5qw.onrender.com/api/orders/")
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.log(err));

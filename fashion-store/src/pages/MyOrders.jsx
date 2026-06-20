@@ -13,7 +13,7 @@ const MyOrders = () => {
   const fetchOrders = async () => {
     try {
       const res = await axios.get(
-        "http://127.0.0.1:8000/api/orders/"
+        "https://fashion-store-c5qw.onrender.com/api/orders/"
       );
 
       setOrders(res.data);
